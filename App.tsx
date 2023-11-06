@@ -14,32 +14,34 @@ import {black} from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 const App = () => {
   const [peso, setPeso] = React.useState('');
   const [altura, setAltura] = React.useState('');
-  const [resultat, setResultat] = React.useState('');
+  const [resultat, setResultat] = React.useState({missatge:"",color:""});
 
   const calcular = () => {
 
     let imc = parseFloat(peso) / (parseFloat(altura) * parseFloat(altura));
-    if (imc < 18.5) setResultat('Peso insuficiente');
-    else if (imc < 24.9) setResultat('Normopeso');
-    else if (imc < 26.9) setResultat('Sobrepeso grado I');
-    else if (imc < 29.9) setResultat('Sobrepeso grado II (preobesidad)');
-    else if (imc < 34.9) setResultat('Obesidad de tipo I');
-    else if (imc < 39.9) setResultat('Obesidad de tipo II ');
-    else if (imc < 49.9) setResultat('Obesidad de tipo III (mórbida)');
-    else setResultat('Obesidad de tipo IV (extrema)');
+    if (imc < 18.5) setResultat({missatge:'Peso insuficiente',color:'green'});
+    else if (imc < 24.9) setResultat({missatge:'Normopeso',color:'green'});
+    else if (imc < 26.9) setResultat({missatge:'Sobrepeso grado I',color:'green'});
+    else if (imc < 29.9) setResultat({missatge:'Sobrepeso grado II (preobesidad)',color:'orange'});
+    else if (imc < 34.9) setResultat({missatge:'Obesidad de tipo I',color:'orange'});
+    else if (imc < 39.9) setResultat({missatge:'Obesidad de tipo II ',color:'orange'});
+    else if (imc < 49.9) setResultat({missatge:'Obesidad de tipo III (mórbida)',color:'red'});
+    else setResultat({missatge:'Obesidad de tipo IV (extrema)',color:'red'});
   };
+  
   return (
     <View style={stils.contenedor}>
       <View style={stils.contenedorTitulo}><Text style={stils.titulo}>Calculadora IMC</Text></View>
       
       <View style={stils.centro}>
-        <Entrada tipo="Pes" onTextTransmit={texto => setPeso(texto)}></Entrada>
-        <Entrada tipo="Altura" onTextTransmit={texto => setAltura(texto)}></Entrada>
+        <Entrada tipo="Pes" onTextTransmit={texto => setPeso(texto)} valor={peso}></Entrada>
+        <Entrada tipo="Altura" onTextTransmit={texto => setAltura(texto)} valor={altura}></Entrada>
         <View style={stils.viewButton}>
           <Button style={stils.button} buttonColor='purple' textColor='white' onPress={() => calcular()}> Calcula </Button>
         </View>
       </View>
-      <Text style={stils.resultat}>{resultat}</Text>
+      <Text style={{...stils.resultat,color: resultat.color}}>{resultat.missatge
+      }</Text>
     </View>
   );
 };
@@ -64,7 +66,6 @@ const stils = StyleSheet.create({
   resultat: {
     textAlign: 'center',
     margin: 15,
-    color: 'black',
     fontSize: 20,
     flex:1
   },

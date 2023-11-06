@@ -1,20 +1,37 @@
 import React from 'react';
 import {ScrollView, StatusBar, StyleSheet, Text, View} from 'react-native';
-import {Button, TextInput} from 'react-native-paper';
+import {Button, TextInput,HelperText} from 'react-native-paper';
 
+const comprovaCadena=(entrada)=>{
+
+ const expressioRegular=/^\d+\.+\d|^\d+$/
+ return expressioRegular.test(entrada)
+}
 const Entrada = props => {
-  const [text, setText] = React.useState('');
+  const [error, setError] = React.useState('');
+  const comprovaEntrada=(entrada)=>{
+
+   props.onTextTransmit
+      if( entrada==0){
+          setError("El valor no puede ser 0")
+      }
+      
+    
+ 
+  }
   return (
     <View style={stils.entrada}>
-      <View style={stils.espacio}></View>
-      <Text style={stils.text}>{props.tipo}:</Text>
+      
       <TextInput
         style={stils.textInput}
         label={props.tipo}
         value={props.text}
-        onChangeText={props.onTextTransmit}
+        onChangeText={()=>comprovaEntrada(props.valor) }
+        keyboardType='numeric'
       />
-      <View style={stils.espacio}></View>
+      <HelperText style={stils.helperText} type="error" visible={error.length>0? true:false}>
+        {error}
+      </HelperText>
     </View>
   );
 };
@@ -26,15 +43,14 @@ const stils = StyleSheet.create({
     justifyContent: 'center',
     flex:1,
   },
-  text: {
-    flex: 1,
-  },
+ 
   textInput: {
-    flex: 3,
-  },
-  espacio: {
     flex: 1,
   },
+  helperText:{
+    flex:1,
+  }
+  
 });
 
 export default Entrada;
