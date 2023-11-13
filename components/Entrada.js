@@ -7,6 +7,7 @@ const comprovaCadena = entrada => {
   return expressioRegular.test(entrada);
 };
 
+
 const Entrada = props => {
   const [errors, setErrors] = React.useState('');
 

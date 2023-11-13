@@ -10,6 +10,8 @@ import {StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-paper';
 import Entrada from './Entrada';
 import Resultat from './Resultat';
+//import {calcular} from '../funcions'
+
 
 
 const Calculadora = () => {
@@ -21,8 +23,7 @@ const Calculadora = () => {
     color: '',
   });
   const [visible, setVisible] = React.useState([false, false]);
-
-  const calcular = () => {
+  const calcular = ()=> {
     let imc = parseFloat(peso) / (parseFloat(altura) * parseFloat(altura));
     if (imc < 18.5)
       setResultat({numero: imc, missatge: 'Peso insuficiente', color: 'green'});
@@ -59,13 +60,12 @@ const Calculadora = () => {
         color: 'red',
       });
   };
-
   const calcularVisible = (index, valor) => {
-    const valors = [...visible];
-    valors[index] = valor;
-    setVisible(valors);
-    setResultat({numero: '', missatge: '', color: ''});
-  };
+  const valors = [...visible];
+  valors[index] = valor;
+  setVisible(valors);
+  setResultat({numero: '', missatge: '', color: ''});
+};
 
   return (
     <View style={stils.contenedor}>
@@ -90,7 +90,7 @@ const Calculadora = () => {
               style={stils.button}
               buttonColor="purple"
               textColor="white"
-              onPress={() => calcular()}>
+              onPress={ calcular}>
               Calcula
             </Button>
           )}
